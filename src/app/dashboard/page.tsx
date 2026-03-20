@@ -1,6 +1,7 @@
 import Topbar from '@/components/dashboard/Topbar'
 import TabBar from '@/components/dashboard/TabBar'
 import Sidebar from '@/components/dashboard/Sidebar'
+import FilterArea from '@/components/dashboard/FilterArea'
 
 
 export default function DashboardPage(){
@@ -18,7 +19,15 @@ export default function DashboardPage(){
                     <Sidebar/>
                     
                     <main style={{flex:1, padding:"16px"}}>
-                        
+                        <div style={{
+                            fontSize:"13px",
+                            fontWeight:"500",
+                            color:"#333",
+                            marginBottom:"10px"
+                            }}>
+                            Ricerca ordini
+                        </div>
+                        <FilterArea/>
                     </main>
                 </div>
         </div>
