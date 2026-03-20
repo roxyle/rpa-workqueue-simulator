@@ -2,6 +2,10 @@ import Topbar from '@/components/dashboard/Topbar'
 import TabBar from '@/components/dashboard/TabBar'
 import Sidebar from '@/components/dashboard/Sidebar'
 import FilterArea from '@/components/dashboard/FilterArea'
+import OrderTable from '@/components/dashboard/OrderTable'
+import { ORDERS_PAGE_1 } from '@/constants/orders'
+import Pagination from '@/components/dashboard/Pagination'
+import FooterLog from '@/components/dashboard/FooterLog'
 
 
 export default function DashboardPage(){
@@ -28,8 +32,13 @@ export default function DashboardPage(){
                             Ricerca ordini
                         </div>
                         <FilterArea/>
+                        
+                        <OrderTable orders={ORDERS_PAGE_1} currentPage={1} totalPages={2}/>
+                        <Pagination currentPage={1} totalPages={2}/>
                     </main>
                 </div>
+
+                <FooterLog log={[]}/>
         </div>
     )
 }
