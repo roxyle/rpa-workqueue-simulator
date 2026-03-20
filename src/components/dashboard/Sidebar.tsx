@@ -1,3 +1,5 @@
+"use client"
+import { useRobot } from "@/context/RobotContext"
 const SIDEBAR_SECTIONS=[
     {
         title:"Navigazione",
@@ -9,8 +11,15 @@ const SIDEBAR_SECTIONS=[
     }
 ]
 
+const STEP_MAP: Record<string, string>={
+  "Home": "nav-home",
+  "Nuovo ordine": "nav-nuovo-ordine",
+  "Ricerca ordini": "nav-ricerca-ordini",
+}
+
 
 export default function Sidebar(){
+    const { robotState } = useRobot()
     return(
         <div style={{
             width:"160px",
@@ -35,8 +44,11 @@ export default function Sidebar(){
 
                             {
                                 section.items.map(
-                                    (item)=>(
+                                    (item)=>{
+                                        const isActive = STEP_MAP[item] === robotState.currentStep;
+                                        return (
                                         <div key={item} id={`sidebar-${item.toLowerCase().replace(/\s+/g,"-")}`}
+                                        className={isActive?"robot-active":""}
                                             style={{
                                                 padding:"7px 12px",
                                                 fontSize:"12px",
@@ -48,7 +60,7 @@ export default function Sidebar(){
                                             }}>
                                             {item}
                                         </div>
-                                    )
+                                    )}
                                 )
                             }
                         </div>

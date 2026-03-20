@@ -1,9 +1,10 @@
-interface FooterLogProps{
-    log:string[]
-}
+'use client'
+import { useRobot } from "@/context/RobotContext"
 
 
-export default function FooterLog({log}:FooterLogProps){
+
+export default function FooterLog(){
+    const { robotState } = useRobot()
     return(
         <div style={{
             borderTop:"1px solid #c8d4e0",
@@ -14,13 +15,14 @@ export default function FooterLog({log}:FooterLogProps){
             backgroundColor:"#f7f8fa"
             }}>
                 <div style={{flex:1, fontSize:"10px", color:"#666", fontFamily:"monospace"}}>
-                    {log.length===0?
+                    {robotState.log.length===0?
                     "log robot > in attesa ..."
-                    : log[log.length-1]
+                    : robotState.log[robotState.log.length-1]
                     }
                 </div>
 
-            <button id="export-csv" style={{
+            <button id="export-csv" className={robotState.currentStep==="export"? "robot-active" : ""}
+                style={{
                 padding:"5px 14px",
                 fontSize:"11px",
                 borderRadius:"4px",
