@@ -68,15 +68,13 @@ export default function FooterLog(){
                     </div>
                 ) : (
                         robotState.log.map((entry, index) => (
-                            <div
-                            key={index}
-                            style={{
-                                fontSize: "11px",
-                                color: "#4ec94e",
-                                fontFamily: "monospace",
-                                lineHeight: "1.6",
-                            }}
-                            >
+                            <div key={index} style={{
+                                    fontSize: "11px",
+                                    color: entry.includes("interrotta") ? "#e24b4a" : "#4ec94e",
+                                    fontFamily: "monospace",
+                                    lineHeight: "1.6",
+                                }}
+                                >
                             {entry}
                             </div>
                         ))

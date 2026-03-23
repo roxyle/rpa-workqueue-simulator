@@ -61,7 +61,8 @@ const stopRobot = useCallback(() => {
         ...prev,
         status: "idle",
         currentStep: "idle",
-        currentRowIndex: null
+        currentRowIndex: null,
+        log: [...prev.log, "log robot > esecuzione interrotta dall'utente"]
         }
     ))
     setVisibleOrders([])
