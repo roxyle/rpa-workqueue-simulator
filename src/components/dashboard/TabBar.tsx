@@ -1,6 +1,18 @@
+'use client'
+import {useRobot} from '@/context/RobotContext'
+
+
+
+const ACTIVE_STEPS=["nav-ricerca-ordini", "filter-date-from", "filter-date-to", "filter-submit", "scan-row", "paginate", "export"]
+
+
+
 export default function TabBar(){
+    const {robotState}=useRobot()
+
     const tabs=["Dashboard","Ordini attivi","Ricerca ordini","Report","Impostazioni"]
     
+    const ricercaAttiva= ACTIVE_STEPS.includes(robotState.currentStep)||robotState.status==="done"
     
     return(
         <div style={{
@@ -13,20 +25,23 @@ export default function TabBar(){
 
             {
                 tabs.map(
-                    (tab)=>(
+                    (tab)=>{
+                        const isActive=tab==="Ricerca ordini"&&ricercaAttiva
+                        return (
                         <div key={tab} style={{
                             padding:"8px 16px",
                             fontSize:"12px",
-                            color:tab==="Ricerca ordini"?"#1a3a5c":"#888",
-                            fontWeight:tab==="Ricerca ordini"?"500":"400",
+                            color:isActive?"#1a3a5c":"#888",
+                            fontWeight:isActive?"500":"400",
                             borderRight:"1px solid #c8d4e0",
-                            borderBottom:tab==="Ricerca ordini"?"2px solid #1a3a5c":"none",
-                            backgroundColor:tab==="Ricerca ordini"?"#ffffff":"transparent",
+                            borderBottom:isActive?"2px solid #1a3a5c":"none",
+                            backgroundColor:isActive?"#ffffff":"transparent",
                             cursor:"default"
                             }}>
                                 {tab}
                         </div>
-                    )
+                        )
+                    }
                 )
             }
         </div>

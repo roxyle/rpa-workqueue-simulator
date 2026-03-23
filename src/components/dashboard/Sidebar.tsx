@@ -1,5 +1,5 @@
 "use client"
-import { useRobot } from "@/context/RobotContext"
+import {useRobot} from "@/context/RobotContext"
 const SIDEBAR_SECTIONS=[
     {
         title:"Navigazione",
@@ -17,9 +17,16 @@ const STEP_MAP: Record<string, string>={
   "Ricerca ordini": "nav-ricerca-ordini",
 }
 
+const ACTIVE_STEPS=["nav-ricerca-ordini", "filter-date-from", "filter-date-to", "filter-submit", "scan-row", "paginate", "export"]
+
+
 
 export default function Sidebar(){
-    const { robotState } = useRobot()
+    const {robotState} = useRobot()
+    const ricercaAttiva= ACTIVE_STEPS.includes(robotState.currentStep)||robotState.status==="done"
+
+
+
     return(
         <div style={{
             width:"160px",
@@ -43,24 +50,28 @@ export default function Sidebar(){
                             </div>
 
                             {
-                                section.items.map(
-                                    (item)=>{
-                                        const isActive = STEP_MAP[item] === robotState.currentStep;
-                                        return (
-                                        <div key={item} id={`sidebar-${item.toLowerCase().replace(/\s+/g,"-")}`}
-                                        className={isActive?"robot-active":""}
-                                            style={{
-                                                padding:"7px 12px",
-                                                fontSize:"12px",
-                                                color:item==="Ricerca ordini"?"#1a3a5c":"#666",
-                                                fontWeight:item==="Ricerca ordini"?"500":"400",
-                                                borderLeft:item==="Ricerca ordini"?"2px solid #1a3a5c":"2px solid transparent",
-                                                backgroundColor:item==="Ricerca ordini"?"#e8eef5":"transparent",
-                                                cursor:"default"
-                                            }}>
-                                            {item}
+                                section.items.map((item) => {
+                                    const isRobotActive = STEP_MAP[item] === robotState.currentStep;
+                                    const isSelected = item === "Ricerca ordini" && ricercaAttiva;
+                                    return (
+                                        <div
+                                        key={item}
+                                        id={`sidebar-${item.toLowerCase().replace(/\s+/g, "-")}`}
+                                        className={isRobotActive ? "robot-active" : ""}
+                                        style={{
+                                            padding: "7px 12px",
+                                            fontSize: "12px",
+                                            color: isSelected ? "#1a3a5c" : "#666",
+                                            fontWeight: isSelected ? "500" : "400",
+                                            borderLeft: isSelected ? "2px solid #1a3a5c" : "2px solid transparent",
+                                            backgroundColor: isSelected ? "#e8eef5" : "transparent",
+                                            cursor: "default",
+                                        }}
+                                        >
+                                        {item}
                                         </div>
-                                    )}
+                                    );
+                                    }
                                 )
                             }
                         </div>
