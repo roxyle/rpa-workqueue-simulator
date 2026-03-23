@@ -50,7 +50,7 @@ a {
 
 
 .robot-active {
-  outline: 3px solid #f0a500;
+  outline: 3px solid #f0a500 !important;
   outline-offset: -1px;
   transition: box-shadow 0.2s ease-in-out;
 }

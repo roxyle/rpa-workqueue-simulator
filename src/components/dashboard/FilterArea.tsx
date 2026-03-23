@@ -5,7 +5,7 @@ import { useRobot } from "@/context/RobotContext"
 
 
 export default function FilterArea(){
-    const { robotState } = useRobot()
+    const { robotState, filterDateFrom, filterDateTo } = useRobot()
     return(
         <div style={{
             backgroundColor:"#f7f8fa",
@@ -28,12 +28,7 @@ export default function FilterArea(){
                         </label>
 
                         <input id="filter-date-from" type="text" readOnly
-                            value={robotState.currentStep === "filter-date-from" || 
-                            robotState.currentStep === "filter-date-to" || 
-                            robotState.currentStep === "filter-submit" ||
-                            robotState.currentStep === "scan-row" ||
-                            robotState.currentStep === "paginate" ||
-                            robotState.currentStep === "export" ? "10/03/2026" : ""}
+                            value={filterDateFrom}
                             className={robotState.currentStep === "filter-date-from" ? "robot-active" : ""}
                             style={{
                                 border:"1px solid #c8d4e0",
@@ -54,11 +49,7 @@ export default function FilterArea(){
                     </label>
 
                     <input id="filter-date-to" type="text" readOnly
-                        value={robotState.currentStep === "filter-date-to" ||
-                        robotState.currentStep === "filter-submit" ||
-                        robotState.currentStep === "scan-row" ||
-                        robotState.currentStep === "paginate" ||
-                        robotState.currentStep === "export" ? "20/03/2026" : ""}
+                        value={filterDateTo}
                         className={robotState.currentStep === "filter-date-to" ? "robot-active" : ""}
                         style={{
                                 border:"1px solid #c8d4e0",

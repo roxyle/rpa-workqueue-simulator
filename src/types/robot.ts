@@ -20,7 +20,7 @@ export interface RobotStep{
 }
 
 
-export type RobotStatus="idle"|"running"|"done"|"error"
+export type RobotStatus="idle"|"running"|"done"|"stopped"|"error"
 
 
 export interface RobotState{

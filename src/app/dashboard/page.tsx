@@ -7,13 +7,14 @@ import FilterArea from "@/components/dashboard/FilterArea"
 import OrderTable from "@/components/dashboard/OrderTable"
 import Pagination from "@/components/dashboard/Pagination"
 import FooterLog from "@/components/dashboard/FooterLog"
-import { useRobot } from "@/context/RobotContext"
+import {useRobot} from "@/context/RobotContext"
+import LoginForm from "@/components/login/LoginForm"
 
 
 
 
 export default function DashboardPage() {
-const {robotState, visibleOrders, tableVisible, startRobot, stopRobot} = useRobot();
+const {robotState, visibleOrders, tableVisible, showLogin, showDashboardContent, startRobot, stopRobot, resetToLogin} = useRobot();
 
 
 
@@ -25,8 +26,25 @@ return (
         display: "flex",
         flexDirection: "column",
         backgroundColor: "#e8edf2",
-    }}
-    >
+        position:"relative"
+    }}>
+
+        {
+            showLogin&&(
+                <div style={{
+                    position:"absolute",
+                    inset:0,
+                    backgroundColor:"#e8edf2",
+                    display:"flex",
+                    alignItems: "center",
+                    justifyContent:"center",
+                    zIndex:10,
+                    overflow: "visible"
+                    }}>
+                        <LoginForm/>
+                </div>
+            )
+        }
     <Topbar />
     <TabBar />
     <div style={{ display: "flex", flex: 1 }}>
@@ -38,18 +56,22 @@ return (
                 justifyContent: "space-between",
                 marginBottom: "10px"
                 }}>
-                    <div
+                    
+                    {showDashboardContent && (<div
                         style={{
                         fontSize: "13px",
                         fontWeight: "500",
                         color: "#333",
-                        marginBottom: "10px",
+                        //marginBottom: "10px",
                         }}
                     >
                         Ricerca ordini
-                    </div>
+                    </div>)}
 
-                    <button onClick={robotState.status==='running'?stopRobot:startRobot}
+                    <button onClick={robotState.status==='running'?stopRobot
+                        :robotState.status==="done"||robotState.status==="stopped"? resetToLogin
+                            :startRobot  
+                        }
                         style={{
                             padding:"5px 16px",
                             fontSize: "11px",
@@ -62,13 +84,13 @@ return (
                         }}>
                             {robotState.status === "idle" && "Avvia robot"}
                             {robotState.status === "running" && "Stop robot"}
-                            {robotState.status === "done" && "Esegui di nuovo"}
+                            {(robotState.status === "done" || robotState.status==="stopped")&& "Torna al login per rieseguire"}
                     </button>
                 </div>
 
-                <FilterArea />
+                {showDashboardContent && <FilterArea />}
 
-                {tableVisible && (
+                {showDashboardContent && tableVisible && (
                     <>
                     <OrderTable
                         orders={visibleOrders}

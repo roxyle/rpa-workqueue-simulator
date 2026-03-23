@@ -1,13 +1,15 @@
 'use client'
-import {useState} from 'react'
+import { useRobot } from '@/context/RobotContext'
+// import {useState} from 'react'
 // import {useRouter} from 'next/navigation'
 // import { ROBOT_CREDENTIALS } from '@/constants/robot'
 
 
 export default function LoginForm(){
     // const router=useRouter()
-    const [username, setUserName]=useState("")
-    const [password, setPassword]=useState("")
+    // const [username, setUserName]=useState("")
+    // const [password, setPassword]=useState("")
+    const {startRobot,robotState,loginUsername, loginPassword}=useRobot()
 
     return(
         <div style={{
@@ -45,8 +47,9 @@ export default function LoginForm(){
                     }}>
                         Login:
                 </label>
-                <input id='login-username' type='text' value={username}
-                    onChange={(elem)=>setUserName(elem.target.value)}
+                <input id='login-username' type='text' value={loginUsername} readOnly
+                    className={robotState.currentStep === "login-user" ? "robot-active" : ""}
+                    //onChange={(elem)=>setUserName(elem.target.value)}
                     style={{
                         width:"100%",
                         border:"1px solid #c8d4e0",
@@ -66,8 +69,9 @@ export default function LoginForm(){
                     }}>
                     Password:
                 </label>
-                <input id='login-password' type='password' value={password}
-                    onChange={(elem)=>setPassword(elem.target.value)}
+                <input id='login-password' type='password' value={loginPassword} readOnly
+                    className={robotState.currentStep === "login-password" ? "robot-active" : ""}
+                    //onChange={(elem)=>setPassword(elem.target.value)}
                     style={{
                         width:"100%",
                         border:"1px solid #c8d4e0",
@@ -82,7 +86,7 @@ export default function LoginForm(){
                 display:"flex",
                 gap:"8px",
                 justifyContent:"center",
-                marginBottom:"12px"
+                marginBottom:"24px"
                 }}>
                 <button style={{
                     padding:"6px 18px",
@@ -95,7 +99,7 @@ export default function LoginForm(){
                         Cambia password
                 </button>
 
-                <button id='login-submit'
+                <button id='login-submit' className={robotState.currentStep === "login-submit" ? "robot-active" : ""}
                     style={{
                         padding:"6px 18px",
                         fontSize:"12px",
@@ -105,6 +109,22 @@ export default function LoginForm(){
                         cursor:"default"
                     }}>
                         Accedi
+                </button>
+            </div>
+
+            <div style={{ borderTop: "1px solid #e8edf2", paddingTop: "20px", textAlign: "center" }}>
+                <button onClick={startRobot}
+                    style={{
+                        padding: "7px 24px",
+                        fontSize: "12px",
+                        borderRadius: "4px",
+                        border: "1px solid #1a3a5c",
+                        backgroundColor: "#1a3a5c",
+                        color: "#ffffff",
+                        cursor: "pointer",
+                        fontWeight: "500",
+                    }}>
+                        Avvia robot
                 </button>
             </div>
 
