@@ -18,7 +18,8 @@ interface RobotContextValue {
     loginPassword:string
     filterDateFrom:string
     filterDateTo:string
-    showDashboardContent: boolean;
+    showDashboardContent: boolean
+    extractedOrders: Order[]
 }
 
 const initialRobotState: RobotState = {
@@ -47,6 +48,7 @@ export function RobotProvider({children}: {children: ReactNode}) {
     const [filterDateFrom, setFilterDateFrom] = useState("")
     const [filterDateTo, setFilterDateTo] = useState("")
     const [showDashboardContent, setShowDashboardContent] = useState(false)
+    const [extractedOrders, setExtractedOrders] = useState<Order[]>([]);
     //const router=useRouter()
     //const routerRef=useRef(router)
 
@@ -63,6 +65,7 @@ export function RobotProvider({children}: {children: ReactNode}) {
             setFilterDateFrom("")
             setFilterDateTo("")
             setShowDashboardContent(false)
+            setExtractedOrders([])
         }, [])
     
 
@@ -204,7 +207,8 @@ export function RobotProvider({children}: {children: ReactNode}) {
             if (stopRef.current) return
 
             if (order.statoOrdine === "Da evadere" && order.disponibilitaMagazzino === "Disponibile") {
-            setRobotState((prev: RobotState) => (
+                setExtractedOrders((prev)=>[...prev,order])
+                setRobotState((prev: RobotState) => (
                 {
                     ...prev,
                     extractedCount: prev.extractedCount + 1
@@ -285,7 +289,8 @@ export function RobotProvider({children}: {children: ReactNode}) {
     }, [])
 
     return (
-        <RobotContext.Provider value={{ robotState, visibleOrders, tableVisible, showLogin, loginUsername, loginPassword, showDashboardContent, filterDateFrom, filterDateTo, startRobot, stopRobot, resetToLogin }}>
+        <RobotContext.Provider value={{ robotState, visibleOrders, tableVisible, showLogin, loginUsername, loginPassword, 
+        showDashboardContent, filterDateFrom, filterDateTo, startRobot, stopRobot, extractedOrders, resetToLogin }}>
         {children}
         </RobotContext.Provider>
     )

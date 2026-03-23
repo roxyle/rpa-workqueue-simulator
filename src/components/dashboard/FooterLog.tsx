@@ -1,11 +1,56 @@
 'use client'
 import { useRobot } from "@/context/RobotContext"
 import { useRef, useEffect } from "react"
+import {Order} from '@/types/order'
+
+
+
+
+function generateCSV(orders:Order[]): string{
+    const headers=[
+        "ID Ordine",
+        "Data Ordine",
+        "Data Consegna Prevista",
+        "Cliente",
+        "Stato Ordine",
+        "Disponibilita Magazzino",
+        "Note"
+    ]
+
+    const rows=orders.map(
+        (order)=>[
+            order.idOrdine,
+            order.dataOrdine,
+            order.dataConsegnaPrevista,
+            order.cliente,
+            order.statoOrdine,
+            order.disponibilitaMagazzino ?? "",
+            order.note
+        ]
+    )
+
+    return [headers, ...rows]
+    .map((row) => row.map((cell) => `"${cell}"`).join(","))
+    .join("\n")
+}
+
+
+function downloadCSV(orders: Order[], filename: string) {
+    const csv = generateCSV(orders);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
 
 
 
 export default function FooterLog(){
-    const { robotState } = useRobot()
+    const { robotState, extractedOrders } = useRobot()
     const scrollRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -13,6 +58,12 @@ export default function FooterLog(){
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     },[robotState.log])
+
+
+
+    const canExport = (robotState.status === "done" || robotState.status === "stopped") && extractedOrders.length > 0
+    const filename = robotState.status === "stopped" ? "ordini_parziali.csv" : "ordini_da_evadere.csv"
+
 
 
     return(
@@ -40,16 +91,18 @@ export default function FooterLog(){
                         ROBOT LOG
                     </span>
 
-                    <button id="export-csv" className={robotState.currentStep==="export"? "robot-active" : ""}
+                    <button id="export-csv" className={`${robotState.currentStep === "export" ? "robot-active" : ""} ${canExport ? "cursor-pointer" : ""}`}
+                        onClick={canExport ? () => downloadCSV(extractedOrders, filename) : undefined}
                         style={{
                         padding:"3px 12px",
                         fontSize:"11px",
                         borderRadius:"4px",
                         border:"1px solid #3b6d11",
-                        backgroundColor:"#1e3a1e",
-                        color:"#4ec94e",
-                        fontWeight:"500",
-                        cursor:"default"
+                        backgroundColor: canExport ? "#1e3a1e" : "#2a2a2a",
+                        color: canExport ? "#4ec94e" : "#555",
+                        cursor: canExport ? "pointer" : "default",
+                        fontWeight:"500"
+                        
                     }}>
                         Export CSV
                     </button>

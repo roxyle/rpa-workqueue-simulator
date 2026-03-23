@@ -54,3 +54,7 @@ a {
   outline-offset: -1px;
   transition: box-shadow 0.2s ease-in-out;
 }
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
