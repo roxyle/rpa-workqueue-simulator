@@ -1,4 +1,4 @@
-# rpa-workqueue-simulator
+# RPA simulator
 
 ITA: Simulazione di un processo RPA (Robotic Process Automation) sviluppato in ambito e-commerce/logistica per il portfolio. Il robot opera su un gestionale fittizio chiamato OrderDesk e automatizza la ricerca e l'estrazione di ordini da evadere.
 
