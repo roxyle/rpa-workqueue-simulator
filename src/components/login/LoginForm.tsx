@@ -112,20 +112,29 @@ export default function LoginForm(){
                 </button>
             </div>
 
-            <div style={{ borderTop: "1px solid #e8edf2", paddingTop: "20px", textAlign: "center" }}>
+            <div style={{ borderTop: "1px solid #e8edf2", paddingTop: "8px", textAlign: "center" }}>
                 <button onClick={startRobot}
                     style={{
                         padding: "7px 24px",
                         fontSize: "12px",
                         borderRadius: "4px",
                         border: "1px solid #1a3a5c",
-                        backgroundColor: "#1a3a5c",
+                        backgroundColor: "#19be8c",
                         color: "#ffffff",
                         cursor: "pointer",
                         fontWeight: "500",
                     }}>
                         Avvia robot
                 </button>
+
+
+                <div style={{ borderTop: "1px solid #e8edf2", paddingTop: "16px", marginTop: "8px", textAlign: "center" }}>
+                    <div style={{ fontSize: "11px", color: "#888", lineHeight: "1.6" }}>
+                        <span style={{ color: "#f0a500", fontWeight: "500"}}>Attenzione⚠️Si sconsiglia di visionare la demo su mobile.</span>
+                        {" "}Questa demo è ottimizzata per desktop in quanto simula un processo RPA avviato su 
+                        gestionali enterprise, i quali solitamente non sono progettati per dispositivi mobili.
+                    </div>
+                </div>
             </div>
 
         </div>
