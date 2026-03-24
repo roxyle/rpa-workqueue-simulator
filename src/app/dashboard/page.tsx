@@ -9,6 +9,7 @@ import Pagination from "@/components/dashboard/Pagination"
 import FooterLog from "@/components/dashboard/FooterLog"
 import {useRobot} from "@/context/RobotContext"
 import LoginForm from "@/components/login/LoginForm"
+import MonitorPanel from "@/components/dashboard/MonitorPanel"
 
 
 
@@ -104,6 +105,7 @@ return (
                     </>
                 )}
         </main>
+        <MonitorPanel />
     </div>
     <FooterLog />
     </div>
