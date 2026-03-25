@@ -132,7 +132,7 @@ export default function LoginForm(){
                     <div style={{ fontSize: "11px", color: "#888", lineHeight: "1.6" }}>
                         <span style={{ color: "#f0a500", fontWeight: "500"}}>Attenzione⚠️Si sconsiglia di visionare la demo su mobile.</span>
                         {" "}Questa demo è ottimizzata per desktop in quanto simula un processo RPA avviato su 
-                        gestionali enterprise, i quali solitamente non sono progettati per dispositivi mobili.
+                        gestionali enterprise, i quali solitamente non sono progettati per dispositivi mobili. Qualora stiate comunque visionando questa demo su mobile, consiglio di passare alla visualizzazione orizzontale
                     </div>
                 </div>
             </div>
